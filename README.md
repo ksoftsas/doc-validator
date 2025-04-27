@@ -124,3 +124,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 This project is a contribution of **KSoft S.A.S.**  
 Website: [https://ksoftonline.com](https://ksoftonline.com)
+LinkedIn: [https://www.linkedin.com/company/ksoft](https://www.linkedin.com/company/ksoft)
+X: [@ksoftonline](https://x.com/ksoft_sas)
+
