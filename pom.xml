@@ -7,25 +7,22 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 
-    <!-- Información básica del proyecto -->
     <groupId>com.ksoft</groupId>
     <artifactId>document-validator</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <packaging>pom</packaging> <!-- Importante: packaging tipo POM para proyecto multi-módulo -->
+    <packaging>pom</packaging> 
     
     <name>Document Validator</name>
     <description>Hybrid solution for document validation (library + API)</description>
     
-    <!-- Módulos que componen el proyecto -->
     <modules>
         <module>validator-core</module>
         <module>validator-api</module>
     </modules>
 
-    <!-- Propiedades comunes -->
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,10 +32,8 @@
         <springdoc.version>2.1.0</springdoc.version>
     </properties>
 
-    <!-- Dependency Management - Versiones comunes para todos los módulos -->
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Boot BOM -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -47,7 +42,6 @@
                 <scope>import</scope>
             </dependency>
             
-            <!-- Otras dependencias que puedan ser compartidas -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -56,11 +50,9 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- Build configuration común -->
     <build>
         <pluginManagement>
             <plugins>
-                <!-- Compilador Java -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -72,14 +64,12 @@
                     </configuration>
                 </plugin>
                 
-                <!-- Spring Boot Maven Plugin (solo para el módulo API) -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
                 </plugin>
                 
-                <!-- Maven JAR Plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -88,7 +78,6 @@
             </plugins>
         </pluginManagement>
         
-        <!-- Plugins comunes para todos los módulos -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -123,13 +112,11 @@
         </plugins>
     </build>
 
-    <!-- Perfiles opcionales -->
     <profiles>
         <profile>
             <id>release</id>
             <build>
                 <plugins>
-                    <!-- GPG Plugin para firmar los artefactos -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
