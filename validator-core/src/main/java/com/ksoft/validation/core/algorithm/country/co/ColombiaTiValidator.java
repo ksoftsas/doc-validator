@@ -31,4 +31,22 @@ public class ColombiaTiValidator implements DocumentValidator {
         }
         return "TI especial";
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar TI (8-10 dígitos)
+        if (cleaned.matches("\\d{8,10}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Tarjeta de Identidad Colombiana (TI)";
+    }
 }

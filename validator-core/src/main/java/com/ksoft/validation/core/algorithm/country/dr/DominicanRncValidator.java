@@ -72,4 +72,22 @@ public class DominicanRncValidator implements DocumentValidator {
         // Implementación real requeriría conexión con DGII
         return !rnc.startsWith("999");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar RNC_DO (9 dígitos)
+        if (cleaned.matches("\\d{9}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Nacional del Contribuyente Dominicano (RNC)";
+    }
 }

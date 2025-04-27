@@ -79,4 +79,22 @@ public class ChileRutValidator implements DocumentValidator {
         
         return formatted.append("-").append(parts[1]).toString();
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni guiones/k
+        String cleaned = documentNumber.replaceAll("[^0-9Kk-]", "").toUpperCase();
+        
+        // Validar RUT_CL (X.XXX.XXX-K)
+        if (cleaned.matches("\\d{1,2}\\.\\d{3}\\.\\d{3}-[\\dK]")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Rol Único Tributario Chileno (RUT)";
+    }
 }

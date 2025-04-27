@@ -70,4 +70,22 @@ public class DominicanCieValidator implements DocumentValidator {
         // CIE temporales tienen ciertos patrones en los primeros dígitos
         return cie.startsWith("999") || cie.startsWith("888");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CIE_DO (11 dígitos)
+        if (cleaned.matches("\\d{11}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Electrónica Dominicana (CIE)";
+    }
 }

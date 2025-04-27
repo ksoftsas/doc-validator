@@ -37,4 +37,22 @@ public class ColombiaCcValidator implements DocumentValidator {
         
         return formatted.toString();
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CC (8-10 dígitos)
+        if (cleaned.matches("\\d{8,10}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Ciudadanía Colombiana (CC)";
+    }
 }

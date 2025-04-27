@@ -64,4 +64,22 @@ public class BoliviaCiValidator implements DocumentValidator {
         
         return DEPARTAMENTOS[depCode];
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_BO (8 dígitos)
+        if (cleaned.matches("\\d{8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Boliviana (CI)";
+    }
 }

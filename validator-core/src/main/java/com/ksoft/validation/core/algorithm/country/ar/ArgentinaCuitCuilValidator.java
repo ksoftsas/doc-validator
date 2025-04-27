@@ -62,4 +62,22 @@ public class ArgentinaCuitCuilValidator implements DocumentValidator {
         
         return dv;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni guiones
+        String cleaned = documentNumber.replaceAll("[^0-9-]", "");
+        
+        // Validar formato CUIT/CUIL (XX-XXXXXXXX-X)
+        if (cleaned.matches("\\d{2}-\\d{8}-\\d{1}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "CUIT/CUIL Argentino";
+    }
 }

@@ -104,4 +104,22 @@ public class PanamaCipValidator implements DocumentValidator {
             default: return "Desconocida";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CIP_PA (9 dígitos)
+        if (cleaned.matches("\\d{9}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Personal Panameña (CIP)";
+    }
 }

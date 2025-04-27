@@ -75,4 +75,22 @@ public class HondurasRtnValidator implements DocumentValidator {
             default: return "Otro";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar RTN_HN (14 dígitos)
+        if (cleaned.matches("\\d{14}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Tributario Nacional Hondureño (RTN)";
+    }
 }

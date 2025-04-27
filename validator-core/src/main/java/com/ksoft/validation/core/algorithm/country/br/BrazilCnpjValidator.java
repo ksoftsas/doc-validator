@@ -56,4 +56,22 @@ public class BrazilCnpjValidator implements DocumentValidator {
             cnpj.substring(8, 12),
             cnpj.substring(12));
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni puntos/guiones
+        String cleaned = documentNumber.replaceAll("[^0-9./-]", "");
+        
+        // Validar CNPJ (XX.XXX.XXX/XXXX-XX)
+        if (cleaned.matches("\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cadastro Nacional da Pessoa Jurídica (CNPJ)";
+    }
 }

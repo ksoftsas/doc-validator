@@ -99,4 +99,22 @@ public class PeruRucValidator implements DocumentValidator {
         if (!isValid(ruc) || !ruc.startsWith("10")) return null;
         return ruc.substring(2, 10);
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar RUC_PE (11 dígitos)
+        if (cleaned.matches("\\d{11}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Único de Contribuyentes Peruano (RUC)";
+    }
 }

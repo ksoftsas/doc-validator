@@ -68,4 +68,22 @@ public class PeruDniValidator implements DocumentValidator {
         if (!isValid(dni)) return false;
         return dni.startsWith("25");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar DNI_PE (8 dígitos)
+        if (cleaned.matches("\\d{8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Documento Nacional de Identidad Peruano (DNI)";
+    }
 }

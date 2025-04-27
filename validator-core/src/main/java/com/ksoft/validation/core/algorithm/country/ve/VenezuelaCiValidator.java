@@ -95,4 +95,22 @@ public class VenezuelaCiValidator implements DocumentValidator {
         }
         return "Desconocido";
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos excepto V/E inicial
+        String cleaned = documentNumber.replaceAll("[^VE0-9]", "").toUpperCase();
+        
+        // Asegurar formato V-12345678
+        if(cleaned.matches("^[VE]\\d{8}$")) {
+            return cleaned.charAt(0) + "-" + cleaned.substring(1);
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+    
+    @Override
+    public String getDocumentType() {
+        return "Cédula Venezolana";
+    }
 }

@@ -98,4 +98,22 @@ public class MexicoRfcValidator implements DocumentValidator {
         if (!isValid(rfc)) return "Desconocido";
         return rfc.length() == 12 ? "Persona moral" : "Persona física";
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no alfanuméricos
+        String cleaned = documentNumber.replaceAll("[^A-Z0-9]", "").toUpperCase();
+        
+        // Validar RFC (12-13 caracteres alfanuméricos)
+        if (cleaned.matches("[A-Z]{3,4}[0-9]{6}[A-Z0-9]{2,3}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Federal de Contribuyentes Mexicano (RFC)";
+    }
 }

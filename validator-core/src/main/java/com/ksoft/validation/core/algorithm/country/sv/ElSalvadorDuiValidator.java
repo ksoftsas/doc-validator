@@ -62,4 +62,22 @@ public class ElSalvadorDuiValidator implements DocumentValidator {
             default: return "Desconocido";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni guiones
+        String cleaned = documentNumber.replaceAll("[^0-9-]", "");
+        
+        // Validar DUI_SV (formato: XXXXXXXX-X)
+        if (cleaned.matches("\\d{8}-\\d{1}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Documento Único de Identidad Salvadoreño (DUI)";
+    }
 }

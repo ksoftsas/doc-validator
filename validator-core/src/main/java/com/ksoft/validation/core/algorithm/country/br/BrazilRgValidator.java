@@ -63,4 +63,22 @@ public class BrazilRgValidator implements DocumentValidator {
         
         return base + "-" + dv;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no alfanuméricos
+        String cleaned = documentNumber.replaceAll("[^A-Za-z0-9.-]", "").toUpperCase();
+        
+        // Validar RG (formato flexible: XX.XXX.XXX-X)
+        if (cleaned.matches("[A-Z]{2}\\d{2,3}\\.\\d{3}\\.\\d{3}-[A-Z0-9]")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Geral (RG)";
+    }
 }

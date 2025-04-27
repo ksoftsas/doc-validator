@@ -105,4 +105,22 @@ public class VenezuelaRifValidator implements DocumentValidator {
         // Implementación real requeriría conexión con SENIAT
         return !rif.startsWith("999", 1); // Verificar si los números comienzan con 999
     }
+
+    @Override
+    public String format(String documentNumber) {
+        String cleaned = documentNumber.replaceAll("[^JVE0-9]", "").toUpperCase();
+        
+        if(cleaned.matches("^[JVE]\\d{8}\\d$")) {
+            return cleaned.charAt(0) + "-" + 
+                   cleaned.substring(1, 9) + "-" + 
+                   cleaned.substring(9);
+        }
+        
+        return documentNumber;
+    }
+    
+    @Override
+    public String getDocumentType() {
+        return "RIF Venezolano";
+    }
 }

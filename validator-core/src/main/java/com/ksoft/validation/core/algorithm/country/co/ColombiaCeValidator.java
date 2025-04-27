@@ -24,4 +24,22 @@ public class ColombiaCeValidator implements DocumentValidator {
         String cleaned = cleanNumber(ce);
         return cleaned.matches("^[0-9]{6,7}$");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CE (6-10 dígitos)
+        if (cleaned.matches("\\d{6,10}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Extranjería Colombiana (CE)";
+    }
 }

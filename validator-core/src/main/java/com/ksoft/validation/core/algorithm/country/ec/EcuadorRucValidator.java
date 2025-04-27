@@ -89,4 +89,22 @@ public class EcuadorRucValidator implements DocumentValidator {
             default: return "Desconocido";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar RUC_EC (13 dígitos)
+        if (cleaned.matches("\\d{13}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Único de Contribuyentes Ecuatoriano (RUC)";
+    }
 }

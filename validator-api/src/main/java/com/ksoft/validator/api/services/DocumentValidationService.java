@@ -5,6 +5,8 @@ import com.ksoft.validation.core.model.Country;
 import com.ksoft.validation.core.model.DocumentType;
 import com.ksoft.validation.core.service.impl.IdValidationServiceImpl;
 import com.ksoft.validator.api.dtos.ValidationResponse;
+import com.ksoft.validator.api.validators.ValidatorFactory;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,14 +21,16 @@ public class DocumentValidationService {
     public ValidationResponse validateDocument(String countryCode, String documentType, String documentNumber) {
         // Delegar la validación principal al servicio existente
         boolean isValid = idValidationService.validate(Country.valueOf(countryCode), DocumentType.valueOf(documentType), documentNumber);
+
+        DocumentValidator validator = ValidatorFactory.getValidator(countryCode, documentType);
         
         ValidationResponse response = new ValidationResponse();
         response.setValid(isValid);
         
         if (isValid) {
             response.setFormattedDocument(validator.format(documentNumber));
-            response.setDocumentType(getDocumentTypeDescription(countryCode, documentType));
-            response.setAdditionalInfo(getAdditionalInfo(validator, documentNumber));
+            // response.setDocumentType(getDocumentTypeDescription(countryCode, documentType));
+            // response.setAdditionalInfo(getAdditionalInfo(validator, documentNumber));
         }
         
         return response;

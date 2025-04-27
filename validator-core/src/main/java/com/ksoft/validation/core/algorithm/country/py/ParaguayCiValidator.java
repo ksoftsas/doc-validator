@@ -80,4 +80,22 @@ public class ParaguayCiValidator implements DocumentValidator {
         }
         return "Desconocido";
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_PY (6-8 dígitos)
+        if (cleaned.matches("\\d{6,8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Paraguaya (CI)";
+    }
 }

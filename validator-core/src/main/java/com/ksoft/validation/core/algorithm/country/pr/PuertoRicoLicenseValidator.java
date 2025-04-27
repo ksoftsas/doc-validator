@@ -75,4 +75,22 @@ public class PuertoRicoLicenseValidator implements DocumentValidator {
             return firstChar == 'C' || firstChar == 'D' || firstChar == 'E';
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no alfanuméricos
+        String cleaned = documentNumber.replaceAll("[^A-Z0-9]", "").toUpperCase();
+        
+        // Validar LICENSE_PR (formato flexible: 7-9 caracteres alfanuméricos)
+        if (cleaned.matches("[A-Z0-9]{7,9}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Licencia de Puerto Rico (LICENSE)";
+    }
 }

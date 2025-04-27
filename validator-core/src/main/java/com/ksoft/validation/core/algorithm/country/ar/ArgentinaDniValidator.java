@@ -19,4 +19,22 @@ public class ArgentinaDniValidator implements DocumentValidator {
         // El DNI argentino no tiene dígito verificador, solo validamos formato
         return true;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar formato DNI (8 dígitos)
+        if (cleaned.matches("\\d{8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Documento Nacional de Identidad (DNI)";
+    }
 }

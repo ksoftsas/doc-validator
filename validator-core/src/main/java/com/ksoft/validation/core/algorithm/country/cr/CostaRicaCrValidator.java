@@ -56,4 +56,22 @@ public class CostaRicaCrValidator implements DocumentValidator {
         }
         return cleaned;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_CR (9 dígitos)
+        if (cleaned.matches("\\d{9}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Costarricense (CI)";
+    }
 }

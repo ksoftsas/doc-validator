@@ -2,11 +2,13 @@ package com.ksoft.validator.api.controllers;
 
 import com.ksoft.validator.api.dtos.ValidationRequest;
 import com.ksoft.validator.api.dtos.ValidationResponse;
-import com.ksoft.validator.core.services.DocumentValidationService;
+import com.ksoft.validator.api.services.DocumentValidationService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/validate")

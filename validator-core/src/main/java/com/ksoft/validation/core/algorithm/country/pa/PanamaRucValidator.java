@@ -129,4 +129,22 @@ public class PanamaRucValidator implements DocumentValidator {
             }
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar RUC_PA (12 dígitos)
+        if (cleaned.matches("\\d{12}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Único de Contribuyente Panameño (RUC)";
+    }
 }

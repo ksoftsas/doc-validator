@@ -45,4 +45,22 @@ public class CostaRicaDimexValidator implements DocumentValidator {
                 cleaned.substring(6));
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar DIMEX_CR (11-12 dígitos)
+        if (cleaned.matches("\\d{11,12}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Documento de Identificación Migratoria para Extranjeros (DIMEX)";
+    }
 }

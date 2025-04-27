@@ -58,4 +58,14 @@ public class Mod10Validator implements DocumentValidator {
         
         return (sum % 10) == 0;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        return null;
+    }
+
+    @Override
+    public String getDocumentType() {
+        return null;
+    }
 }

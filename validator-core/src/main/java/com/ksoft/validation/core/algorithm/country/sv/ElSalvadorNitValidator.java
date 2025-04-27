@@ -69,4 +69,22 @@ public class ElSalvadorNitValidator implements DocumentValidator {
             default: return "Otro";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni guiones
+        String cleaned = documentNumber.replaceAll("[^0-9-]", "");
+        
+        // Validar NIT_SV (formato: XXXXXXXX-X o XXXXXXXXX)
+        if (cleaned.matches("\\d{8}-\\d{1}") || cleaned.matches("\\d{9}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Número de Identificación Tributaria Salvadoreño (NIT)";
+    }
 }

@@ -56,4 +56,22 @@ public class ColombiaNitValidator implements DocumentValidator {
         
         return base + "-" + dv;
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar NIT_CO (9-10 dígitos)
+        if (cleaned.matches("\\d{9,10}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Número de Identificación Tributaria Colombiana (NIT)";
+    }
 }

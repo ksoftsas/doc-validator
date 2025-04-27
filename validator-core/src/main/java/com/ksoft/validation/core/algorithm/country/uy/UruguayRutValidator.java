@@ -71,4 +71,22 @@ public class UruguayRutValidator implements DocumentValidator {
         // Implementación real requeriría conexión con DGI
         return !rut.startsWith("99");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni guiones
+        String cleaned = documentNumber.replaceAll("[^0-9-]", "");
+        
+        // Validar RUT_UY (formato: X.XXX.XXX-X o XXXXXXXX-X)
+        if (cleaned.matches("\\d{1,2}\\.\\d{3}\\.\\d{3}-\\d{1}") || cleaned.matches("\\d{8}-\\d{1}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Único Tributario Uruguayo (RUT)";
+    }
 }

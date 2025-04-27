@@ -114,4 +114,22 @@ public class MexicoCurpValidator implements DocumentValidator {
         if (!isValid(curp)) return curp;
         return curp.toUpperCase();
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no alfanuméricos
+        String cleaned = documentNumber.replaceAll("[^A-Z0-9]", "").toUpperCase();
+        
+        // Validar CURP (18 caracteres alfanuméricos)
+        if (cleaned.matches("[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Clave Única de Registro de Población Mexicano (CURP)";
+    }
 }

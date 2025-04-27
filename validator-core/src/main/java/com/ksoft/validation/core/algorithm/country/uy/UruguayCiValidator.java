@@ -83,4 +83,22 @@ public class UruguayCiValidator implements DocumentValidator {
         String cleaned = cleanNumber(ci);
         return cleaned.startsWith("5") || cleaned.startsWith("6");
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_UY (7-8 dígitos)
+        if (cleaned.matches("\\d{7,8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Uruguaya (CI)";
+    }
 }

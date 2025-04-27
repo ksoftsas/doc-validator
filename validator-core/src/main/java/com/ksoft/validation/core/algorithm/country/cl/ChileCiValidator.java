@@ -55,4 +55,22 @@ public class ChileCiValidator implements DocumentValidator {
         String cleaned = cleanFormat(ci);
         return cleaned.split("-")[0];
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_CL (8 dígitos)
+        if (cleaned.matches("\\d{8}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Chilena (CI)";
+    }
 }

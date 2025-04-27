@@ -94,4 +94,14 @@ public class Mod11Validator implements DocumentValidator {
                 ", strictLength=" + strictLength +
                 '}';
     }
+
+    @Override
+    public String format(String documentNumber) {
+        return null;
+    }
+
+    @Override
+    public String getDocumentType() {
+        return null;
+    }
 }

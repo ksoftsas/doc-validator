@@ -75,4 +75,22 @@ public class NicaraguaCiValidator implements DocumentValidator {
             default: return "Desconocido";
         }
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos
+        String cleaned = documentNumber.replaceAll("[^0-9]", "");
+        
+        // Validar CI_NI (12 dígitos)
+        if (cleaned.matches("\\d{12}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Nicaragüense (CI)";
+    }
 }

@@ -55,4 +55,22 @@ public class BrazilCpfValidator implements DocumentValidator {
             cpf.substring(6, 9),
             cpf.substring(9));
     }
+
+    @Override
+    public String format(String documentNumber) {
+        // Eliminar caracteres no numéricos ni puntos/guiones
+        String cleaned = documentNumber.replaceAll("[^0-9.-]", "");
+        
+        // Validar CPF (XXX.XXX.XXX-XX)
+        if (cleaned.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+            return cleaned;
+        }
+        
+        return documentNumber; // Devolver original si no cumple formato
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cadastro de Pessoas Físicas (CPF)";
+    }
 }
