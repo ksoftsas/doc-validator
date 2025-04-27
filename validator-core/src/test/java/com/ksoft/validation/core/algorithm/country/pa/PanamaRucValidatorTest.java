@@ -26,7 +26,7 @@ class PanamaRucValidatorTest {
 
     @Test
     void testFormatRuc() {
-        assertEquals("10-12345-67-8", validator.formatRuc("1012345678"));
-        assertEquals("123456789-1-23", validator.formatRuc("123456789123"));
+        assertEquals("10-12345-67-8", validator.format("1012345678"));
+        assertEquals("123456789-1-23", validator.format("123456789123"));
     }
 }

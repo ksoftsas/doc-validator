@@ -21,6 +21,6 @@ class CostaRicaCrValidatorTest {
 
     @Test
     void testFormatCr() {
-        assertEquals("1-2345-6789", validator.formatCr("123456789"));
+        assertEquals("1-2345-6789", validator.format("123456789"));
     }
 }

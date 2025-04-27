@@ -20,6 +20,6 @@ class ElSalvadorDuiValidatorTest {
 
     @Test
     void testFormatDui() {
-        assertEquals("12345678-9", validator.formatDui("123456789"));
+        assertEquals("12345678-9", validator.format("123456789"));
     }
 }

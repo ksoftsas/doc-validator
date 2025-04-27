@@ -20,6 +20,6 @@ class UruguayRutValidatorTest {
 
     @Test
     void testFormatRut() {
-        assertEquals("10.123.456789-1", validator.formatRut("101234567891"));
+        assertEquals("10.123.456789-1", validator.format("101234567891"));
     }
 }

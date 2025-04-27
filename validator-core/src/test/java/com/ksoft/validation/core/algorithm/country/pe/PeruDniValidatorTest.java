@@ -21,6 +21,6 @@ class PeruDniValidatorTest {
 
     @Test
     void testFormatDni() {
-        assertEquals("12345678-0", validator.formatDni("123456780"));
+        assertEquals("12345678-0", validator.format("123456780"));
     }
 }

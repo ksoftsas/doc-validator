@@ -1,85 +1,41 @@
 package com.ksoft.validation.core.algorithm.country.ec;
 
-import com.ksoft.validation.core.algorithm.DocumentValidator;
+import com.ksoft.validation.core.algorithm.mod10.Mod10Validator;
 
-public class EcuadorCiValidator implements DocumentValidator {
-    
-    private static final String CI_PATTERN = "^[0-9]{10}$";
-    private static final int[] PROVINCIAS_VALIDAS = {
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 
-        16, 17, 18, 19, 20, 21, 22, 23, 24, 30 // 30 para extranjeros
-    };
-    
+public class EcuadorCiValidator extends Mod10Validator {
+    public EcuadorCiValidator() {
+        super(new int[]{2, 1},    // Pesos alternados 2,1,2,1...
+              true,               // Procesar en orden inverso
+              10,                 // Longitud fija: 10 dígitos
+              "^[1-9][0-9]{9}$"); // Patrón: no puede empezar con 0
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Identidad Ecuatoriana";
+    }
+
+    @Override
+    public String format(String documentNumber) {
+        String cleaned = cleanNumber(documentNumber);
+        if (cleaned.length() != 10) return documentNumber;
+        
+        // Formato: XX.XXX.XXX
+        return cleaned.substring(0, 2) + "." + 
+               cleaned.substring(2, 5) + "." + 
+               cleaned.substring(5);
+    }
+
     @Override
     public boolean isValid(String documentNumber) {
+        if (!super.isValid(documentNumber)) {
+            return false;
+        }
+        
         String cleaned = cleanNumber(documentNumber);
         
-        // Validar formato básico (10 dígitos)
-        if (!cleaned.matches(CI_PATTERN)) {
-            return false;
-        }
-        
-        // Validar provincia (primeros dos dígitos)
-        int provincia;
-        try {
-            provincia = Integer.parseInt(cleaned.substring(0, 2));
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        
-        if (!isProvinciaValida(provincia)) {
-            return false;
-        }
-        
-        // Validar tercer dígito (0-5 para personas naturales, 6 para empresas públicas)
-        int tercerDigito = Character.getNumericValue(cleaned.charAt(2));
-        if (tercerDigito < 0 || tercerDigito > 6) {
-            return false;
-        }
-        
-        // Aplicar algoritmo módulo 10 (Luhn)
-        return validateModulo10(cleaned);
-    }
-    
-    private boolean isProvinciaValida(int provincia) {
-        for (int p : PROVINCIAS_VALIDAS) {
-            if (p == provincia) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private boolean validateModulo10(String ci) {
-        int sum = 0;
-        for (int i = 0; i < 9; i++) {
-            int digit = Character.getNumericValue(ci.charAt(i));
-            if (i % 2 == 0) {
-                digit *= 2;
-                if (digit > 9) {
-                    digit -= 9;
-                }
-            }
-            sum += digit;
-        }
-        
-        int calculatedDv = (sum % 10 == 0) ? 0 : (10 - (sum % 10));
-        int providedDv = Character.getNumericValue(ci.charAt(9));
-        
-        return calculatedDv == providedDv;
-    }
-    
-    public String getProvincia(String ci) {
-        if (!isValid(ci)) return "Desconocida";
-        
-        int codigo = Integer.parseInt(ci.substring(0, 2));
-        switch (codigo) {
-            case 1: return "Azuay";
-            case 2: return "Bolívar";
-            case 3: return "Cañar";
-            // ... completar con otras provincias
-            case 30: return "Extranjero";
-            default: return "Desconocida";
-        }
+        // Validación adicional: primeros dos dígitos = provincia (01-24)
+        int provincia = Integer.parseInt(cleaned.substring(0, 2));
+        return provincia >= 1 && provincia <= 24;
     }
 }

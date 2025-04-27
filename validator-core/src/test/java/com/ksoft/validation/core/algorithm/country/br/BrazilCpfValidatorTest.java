@@ -21,6 +21,6 @@ class BrazilCpfValidatorTest {
 
     @Test
     void testFormatCpf() {
-        assertEquals("529.982.247-25", validator.formatCpf("52998224725"));
+        assertEquals("529.982.247-25", validator.format("52998224725"));
     }
 }

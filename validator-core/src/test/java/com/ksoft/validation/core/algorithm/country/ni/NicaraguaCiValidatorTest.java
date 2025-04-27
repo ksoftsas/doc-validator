@@ -20,6 +20,6 @@ class NicaraguaCiValidatorTest {
 
     @Test
     void testFormatCi() {
-        assertEquals("001-2805674-12-34", validator.formatCi("00128056741234"));
+        assertEquals("001-2805674-12-34", validator.format("00128056741234"));
     }
 }

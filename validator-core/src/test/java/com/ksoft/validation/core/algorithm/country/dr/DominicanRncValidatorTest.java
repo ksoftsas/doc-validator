@@ -20,6 +20,6 @@ class DominicanRncValidatorTest {
 
     @Test
     void testFormatRnc() {
-        assertEquals("12345678-9", validator.formatRnc("123456789"));
+        assertEquals("12345678-9", validator.format("123456789"));
     }
 }

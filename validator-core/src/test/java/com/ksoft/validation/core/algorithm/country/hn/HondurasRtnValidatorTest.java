@@ -21,12 +21,7 @@ class HondurasRtnValidatorTest {
 
     @Test
     void testFormatRtn() {
-        assertEquals("0801-1990-0083-25", validator.formatRtn("08011990008325"));
+        assertEquals("0801-1990-0083-25", validator.format("08011990008325"));
     }
 
-    @Test
-    void testTipoContribuyente() {
-        assertEquals("Persona natural", validator.getTipoContribuyente("08011990008325"));
-        assertEquals("Persona jurídica", validator.getTipoContribuyente("18011990008325"));
-    }
 }

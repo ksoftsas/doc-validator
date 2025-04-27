@@ -20,9 +20,9 @@ public enum DocumentType {
     // Guatemala
     DPI_GT("DPI_GT"), NIT_GT("NIT_GT"),
     // Honduras
-    RTN_HN("RTN_HN"),
+    RTN_HN("RTN_HN"), DNI_HN("DNI_HN"),
     // México
-    CURP("CURP"), RFC("RFC"),
+    CURP("CURP"), RFC("RFC"), NSS("NSS"),
     // Nicaragua
     CI_NI("CI_NI"), NIT_NI("NIT_NI"),
     // Panamá
@@ -32,7 +32,7 @@ public enum DocumentType {
     // Perú
     DNI_PE("DNI_PE"), RUC_PE("RUC_PE"),
     // Puerto Rico
-    LICENSE_PR("LICENSE_PR"),
+    LICENSE_PR("LICENSE_PR"), SSN_PR("SSN_PR"), ELECTORAL_ID_PR("ELECTORAL_ID_PR"),
     // República Dominicana
     CIE_DO("CIE_DO"), RNC_DO("RNC_DO"),
     // Uruguay

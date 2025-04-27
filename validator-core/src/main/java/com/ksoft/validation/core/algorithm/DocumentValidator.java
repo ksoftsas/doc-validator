@@ -1,6 +1,5 @@
 package com.ksoft.validation.core.algorithm;
 
-@FunctionalInterface
 public interface DocumentValidator {
     boolean isValid(String documentNumber);
     
@@ -12,4 +11,8 @@ public interface DocumentValidator {
     default boolean isNumeric(String str) {
         return str != null && !str.isEmpty() && str.chars().allMatch(Character::isDigit);
     }
+
+    String format(String documentNumber);
+
+    String getDocumentType();
 }

@@ -21,6 +21,6 @@ class UruguayCiValidatorTest {
 
     @Test
     void testFormatCi() {
-        assertEquals("1234567.8", validator.formatCi("12345678"));
+        assertEquals("1234567.8", validator.format("12345678"));
     }
 }

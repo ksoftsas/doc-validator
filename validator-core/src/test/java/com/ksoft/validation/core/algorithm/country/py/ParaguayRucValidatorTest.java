@@ -26,7 +26,7 @@ class ParaguayRucValidatorTest {
 
     @Test
     void testFormatRuc() {
-        assertEquals("8000000-1", validator.formatRuc("80000001"));
-        assertEquals("80000000-1", validator.formatRuc("800000001"));
+        assertEquals("8000000-1", validator.format("80000001"));
+        assertEquals("80000000-1", validator.format("800000001"));
     }
 }

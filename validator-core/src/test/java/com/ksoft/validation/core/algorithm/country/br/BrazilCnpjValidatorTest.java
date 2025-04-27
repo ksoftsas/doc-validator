@@ -21,6 +21,6 @@ class BrazilCnpjValidatorTest {
 
     @Test
     void testFormatCnpj() {
-        assertEquals("33.400.689/0001-09", validator.formatCnpj("33400689000109"));
+        assertEquals("33.400.689/0001-09", validator.format("33400689000109"));
     }
 }

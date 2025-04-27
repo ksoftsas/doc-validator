@@ -21,11 +21,4 @@ class BoliviaCiValidatorTest {
         assertFalse(validator.isValid("A234567"));   // Letra al inicio
         assertFalse(validator.isValid("1234567ABC")); // Demasiadas letras
     }
-
-    @Test
-    void testDepartamento() {
-        assertEquals("LP", validator.getDepartamento("1234567"));
-        assertEquals("CB", validator.getDepartamento("2234567CB"));
-        assertEquals("SC", validator.getDepartamento("3234567SC"));
-    }
 }

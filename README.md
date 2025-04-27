@@ -22,27 +22,28 @@ A hybrid solution (library + API) for validating identity documents across Latin
 
 ## Supported Countries and Documents
 
-| Country         | Key Documents Supported | Validation Type |
-|-----------------|---------------------------|-----------------|
-| Argentina       | DNI, CUIL, CUIT            | Format + Modulo 11 |
-| Bolivia         | CI, NIT                    | Format + Modulo 11 |
-| Brazil          | CPF, CNPJ, RG               | Format + Modulo 11 |
-| Chile           | RUT, CI                     | Format + Modulo 11 |
-| Colombia        | CC, NIT                     | Format + Modulo 11 |
-| Costa Rica      | CR, DIMEX                   | Format |
-| Ecuador         | CI, RUC                     | Format + Modulo 10/11 |
-| El Salvador     | DUI, NIT                    | Format + Modulo 10/11 |
-| Guatemala       | DPI, NIT                    | Format + Modulo 11 |
-| Honduras        | RTN                         | Format |
-| Mexico          | CURP, RFC                   | Format + Special DV |
-| Nicaragua       | CI, NIT                     | Format + Modulo 11 |
-| Panama          | CIP, RUC                    | Format + Modulo 11 |
-| Paraguay        | CI, RUC                     | Format + Modulo 11 |
-| Peru            | DNI, RUC                    | Format + Modulo 11 |
-| Puerto Rico     | Licencia                    | Format |
-| Dominican Rep.  | CIE, RNC                    | Format + Modulo 10/11 |
-| Uruguay         | CI, RUT                     | Format + Modulo 11 |
-| Venezuela       | CI, RIF                     | Format + Modulo 11 |
+| Country            | Key Documents Supported                          | Validation Type         |
+|--------------------|--------------------------------------------------|-------------------------|
+| Argentina          | DNI_AR, CUIL, CUIT                               | Format + Modulo 11      |
+| Bolivia            | CI_BO, NIT_BO                                    | Format + Modulo 11      |
+| Brazil             | CPF, CNPJ, RG_BR                                 | Format + Modulo 11      |
+| Chile              | RUT_CL, CI_CL, CEDULA_RESIDENCIA_CL              | Format + Modulo 11      |
+| Colombia           | CC, NIT_CO, CE_CO, TI_CO                         | Format + Modulo 11      |
+| Costa Rica         | CI_CR, DIMEX_CR                                  | Format                  |
+| Ecuador            | CI_EC, CE_EC, RUC_EC                             | Format + Modulo 10/11   |
+| El Salvador        | DUI_SV, NIT_SV                                   | Format + Modulo 10/11   |
+| Guatemala          | DPI_GT, NIT_GT                                   | Format + Modulo 11      |
+| Honduras           | RTN_HN                                           | Format                  |
+| Mexico             | CURP, RFC                                        | Format + Special DV     |
+| Nicaragua          | CI_NI, NIT_NI                                    | Format + Modulo 11      |
+| Panama             | CIP_PA, RUC_PA                                   | Format + Modulo 11      |
+| Paraguay           | CI_PY, RUC_PY                                    | Format + Modulo 11      |
+| Peru               | DNI_PE, RUC_PE                                   | Format + Modulo 11      |
+| Puerto Rico        | LICENSE_PR                                       | Format                  |
+| Dominican Republic | CIE_DO, RNC_DO                                   | Format + Modulo 10/11   |
+| Uruguay            | CI_UY, RUT_UY                                    | Format + Modulo 11      |
+| Venezuela          | CI_VE, RIF_VE                                    | Format + Modulo 11      |
+| Other              | GENERIC_FORMAT, UNKNOWN                          | Format                  |
 
 ## Getting Started
 

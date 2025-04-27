@@ -1,92 +1,62 @@
 package com.ksoft.validation.core.algorithm.country.ec;
 
 import com.ksoft.validation.core.algorithm.DocumentValidator;
+import com.ksoft.validation.core.algorithm.mod11.Mod11Validator;
 
-public class EcuadorRucValidator implements DocumentValidator {
-    
-    private static final String RUC_PATTERN = "^[0-9]{13}$";
-    private final EcuadorCiValidator ciValidator = new EcuadorCiValidator();
-    
+public class EcuadorRucValidator extends Mod11Validator {
+    public EcuadorRucValidator() {
+        super(new int[]{3, 2, 7, 6, 5, 4, 3, 2}, // Pesos para RUC natural
+              false,                              // Orden normal
+              13,                                 // Longitud fija
+              false);                             // No permite 'K'
+    }
+
+    @Override
+    public String getDocumentType() {
+        return "Registro Único de Contribuyentes (RUC) Ecuatoriano";
+    }
+
+    @Override
+    public String format(String documentNumber) {
+        String cleaned = cleanNumber(documentNumber);
+        if (cleaned.length() != 13) return documentNumber;
+        
+        // Formato: XXX.XXX.XXXX.XXX
+        return cleaned.substring(0, 3) + "." + 
+               cleaned.substring(3, 6) + "." + 
+               cleaned.substring(6, 10) + "." + 
+               cleaned.substring(10);
+    }
+
     @Override
     public boolean isValid(String documentNumber) {
+        if (!super.isValid(documentNumber)) {
+            return false;
+        }
+        
         String cleaned = cleanNumber(documentNumber);
         
-        // Validar formato básico (13 dígitos)
-        if (!cleaned.matches(RUC_PATTERN)) {
-            return false;
+        // Validar tipo de RUC según los tres primeros dígitos
+        int tipo = Integer.parseInt(cleaned.substring(2, 3)); // 3er dígito
+        
+        // RUC Natural (persona física)
+        if (tipo <= 5) {
+            // Validar que los primeros 10 dígitos sean una CI válida
+            String ciPart = cleaned.substring(0, 10);
+            DocumentValidator ciValidator = new EcuadorCiValidator();
+            if (!ciValidator.isValid(ciPart)) {
+                return false;
+            }
+            
+            // Los últimos 3 dígitos deben ser 001-999
+            int establecimiento = Integer.parseInt(cleaned.substring(10));
+            return establecimiento >= 1 && establecimiento <= 999;
         }
-        
-        // Validar según tipo de RUC (tercer dígito)
-        int tercerDigito = Character.getNumericValue(cleaned.charAt(2));
-        
-        if (tercerDigito <= 5) {
-            // Persona natural (validar CI + 001)
-            return validatePersonaNatural(cleaned);
-        } else if (tercerDigito == 6) {
-            // Empresa pública (módulo 11)
-            return validateEmpresaPublica(cleaned);
-        } else if (tercerDigito == 9) {
-            // Sociedad privada o extranjero (módulo 11)
-            return validateSociedadPrivada(cleaned);
-        }
-        
-        return false;
-    }
-    
-    private boolean validatePersonaNatural(String ruc) {
-        // Los primeros 10 dígitos deben ser CI válida
-        String ciPart = ruc.substring(0, 10);
-        if (!ciValidator.isValid(ciPart)) {
-            return false;
-        }
-        
-        // Los últimos 3 dígitos deben ser 001
-        String establecimiento = ruc.substring(10);
-        return establecimiento.equals("001");
-    }
-    
-    private boolean validateEmpresaPublica(String ruc) {
-        // Validar módulo 11 en los primeros 8 dígitos
-        String base = ruc.substring(0, 8);
-        int providedDv = Character.getNumericValue(ruc.charAt(8));
-        
-        int calculatedDv = calculateModulo11(base, new int[]{3, 2, 7, 6, 5, 4, 3, 2});
-        return calculatedDv == providedDv;
-    }
-    
-    private boolean validateSociedadPrivada(String ruc) {
-        // Validar módulo 11 en los primeros 9 dígitos
-        String base = ruc.substring(0, 9);
-        int providedDv = Character.getNumericValue(ruc.charAt(9));
-        
-        int calculatedDv = calculateModulo11(base, new int[]{4, 3, 2, 7, 6, 5, 4, 3, 2});
-        return calculatedDv == providedDv;
-    }
-    
-    private int calculateModulo11(String base, int[] weights) {
-        int sum = 0;
-        for (int i = 0; i < base.length(); i++) {
-            sum += Character.getNumericValue(base.charAt(i)) * weights[i];
-        }
-        
-        int remainder = sum % 11;
-        return (remainder == 0) ? 0 : (11 - remainder);
-    }
-    
-    public String getTipoContribuyente(String ruc) {
-        if (!isValid(ruc)) return "Desconocido";
-        
-        int tercerDigito = Character.getNumericValue(ruc.charAt(2));
-        switch (tercerDigito) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5: return "Persona natural";
-            case 6: return "Empresa pública";
-            case 9: return "Sociedad privada o extranjero";
-            default: return "Desconocido";
+        // RUC Jurídico o entidad pública
+        else {
+            // Validar provincia (primeros dos dígitos)
+            int provincia = Integer.parseInt(cleaned.substring(0, 2));
+            return provincia >= 1 && provincia <= 24;
         }
     }
 }
