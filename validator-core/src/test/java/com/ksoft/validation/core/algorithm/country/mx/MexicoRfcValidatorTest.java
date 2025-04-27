@@ -21,6 +21,6 @@ class MexicoRfcValidatorTest {
 
     @Test
     void testFormatRfc() {
-        assertEquals("GODE561231GR8", validator.formatRfc("gode561231gr8"));
+        assertEquals("GODE561231GR8", validator.format("gode561231gr8"));
     }
 }

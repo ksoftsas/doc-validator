@@ -20,6 +20,6 @@ class NicaraguaNitValidatorTest {
 
     @Test
     void testFormatNit() {
-        assertEquals("12345678-0", validator.formatNit("123456780"));
+        assertEquals("12345678-0", validator.format("123456780"));
     }
 }

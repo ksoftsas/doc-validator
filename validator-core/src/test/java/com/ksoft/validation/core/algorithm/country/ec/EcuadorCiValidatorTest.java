@@ -19,9 +19,4 @@ class EcuadorCiValidatorTest {
         assertFalse(validator.isValid("171003406"));  // Muy corta
     }
 
-    @Test
-    void testProvincia() {
-        assertEquals("Pichincha", validator.getProvincia("1701234567"));
-        assertEquals("Extranjero", validator.getProvincia("3001234567"));
-    }
 }

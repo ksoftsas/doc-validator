@@ -24,7 +24,7 @@ class ChileRutValidatorTest {
 
     @Test
     void testFormatRut() {
-        assertEquals("7.628.790-K", validator.formatRut("7628790-K"));
-        assertEquals("12.345.678-5", validator.formatRut("12345678-5"));
+        assertEquals("7.628.790-K", validator.format("7628790-K"));
+        assertEquals("12.345.678-5", validator.format("12345678-5"));
     }
 }

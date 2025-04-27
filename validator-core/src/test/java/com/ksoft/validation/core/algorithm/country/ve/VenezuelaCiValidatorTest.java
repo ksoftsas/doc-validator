@@ -26,6 +26,6 @@ class VenezuelaCiValidatorTest {
 
     @Test
     void testFormatCi() {
-        assertEquals("V-12345678", validator.formatCi("V12345678"));
+        assertEquals("V-12345678", validator.format("V12345678"));
     }
 }

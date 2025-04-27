@@ -20,6 +20,6 @@ class GuatemalaNitValidatorTest {
 
     @Test
     void testFormatNit() {
-        assertEquals("12345678-9", validator.formatNit("123456789"));
+        assertEquals("12345678-9", validator.format("123456789"));
     }
 }

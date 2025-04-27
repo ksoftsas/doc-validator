@@ -20,6 +20,6 @@ class CostaRicaDimexValidatorTest {
 
     @Test
     void testFormatDimex() {
-        assertEquals("112-3456-7890", validator.formatDimex("112345678901"));
+        assertEquals("112-3456-7890", validator.format("112345678901"));
     }
 }

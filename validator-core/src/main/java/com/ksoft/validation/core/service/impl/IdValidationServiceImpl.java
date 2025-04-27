@@ -21,12 +21,15 @@ import com.ksoft.validation.core.algorithm.country.cr.CostaRicaCrValidator;
 import com.ksoft.validation.core.algorithm.country.cr.CostaRicaDimexValidator;
 import com.ksoft.validation.core.algorithm.country.dr.DominicanCieValidator;
 import com.ksoft.validation.core.algorithm.country.dr.DominicanRncValidator;
+import com.ksoft.validation.core.algorithm.country.ec.EcuadorCeValidator;
 import com.ksoft.validation.core.algorithm.country.ec.EcuadorCiValidator;
 import com.ksoft.validation.core.algorithm.country.ec.EcuadorRucValidator;
 import com.ksoft.validation.core.algorithm.country.gt.GuatemalaDpiValidator;
 import com.ksoft.validation.core.algorithm.country.gt.GuatemalaNitValidator;
+import com.ksoft.validation.core.algorithm.country.hn.HondurasDniValidator;
 import com.ksoft.validation.core.algorithm.country.hn.HondurasRtnValidator;
 import com.ksoft.validation.core.algorithm.country.mx.MexicoCurpValidator;
+import com.ksoft.validation.core.algorithm.country.mx.MexicoNssValidator;
 import com.ksoft.validation.core.algorithm.country.mx.MexicoRfcValidator;
 import com.ksoft.validation.core.algorithm.country.ni.NicaraguaCiValidator;
 import com.ksoft.validation.core.algorithm.country.ni.NicaraguaNitValidator;
@@ -34,7 +37,9 @@ import com.ksoft.validation.core.algorithm.country.pa.PanamaCipValidator;
 import com.ksoft.validation.core.algorithm.country.pa.PanamaRucValidator;
 import com.ksoft.validation.core.algorithm.country.pe.PeruDniValidator;
 import com.ksoft.validation.core.algorithm.country.pe.PeruRucValidator;
+import com.ksoft.validation.core.algorithm.country.pr.PuertoRicoElectoralIdValidator;
 import com.ksoft.validation.core.algorithm.country.pr.PuertoRicoLicenseValidator;
+import com.ksoft.validation.core.algorithm.country.pr.PuertoRicoSsnValidator;
 import com.ksoft.validation.core.algorithm.country.py.ParaguayCiValidator;
 import com.ksoft.validation.core.algorithm.country.py.ParaguayRucValidator;
 import com.ksoft.validation.core.algorithm.country.sv.ElSalvadorDuiValidator;
@@ -109,6 +114,7 @@ public class IdValidationServiceImpl implements IdValidationService {
         register(Country.COSTA_RICA, DocumentType.DIMEX_CR, new CostaRicaDimexValidator());
         // Ecuador
         register(Country.ECUADOR, DocumentType.CI_EC, new EcuadorCiValidator());
+        register(Country.ECUADOR, DocumentType.CE_EC, new EcuadorCeValidator());
         register(Country.ECUADOR, DocumentType.RUC_EC, new EcuadorRucValidator());
         // El Salvador
         register(Country.EL_SALVADOR, DocumentType.DUI_SV, new ElSalvadorDuiValidator());
@@ -118,9 +124,13 @@ public class IdValidationServiceImpl implements IdValidationService {
         register(Country.GUATEMALA, DocumentType.NIT_GT, new GuatemalaNitValidator());
         // Honduras
         register(Country.HONDURAS, DocumentType.RTN_HN, new HondurasRtnValidator());
+        register(Country.HONDURAS, DocumentType.DNI_HN, new HondurasDniValidator());
         // México
         register(Country.MEXICO, DocumentType.CURP, new MexicoCurpValidator());
         register(Country.MEXICO, DocumentType.RFC, new MexicoRfcValidator());
+        register(Country.MEXICO, DocumentType.NSS, new MexicoNssValidator());
+        // Nicaragua
+        register(Country.NICARAGUA, null, null);
         // Nicaragua
         register(Country.NICARAGUA, DocumentType.CI_NI, new NicaraguaCiValidator());
         register(Country.NICARAGUA, DocumentType.NIT_NI, new NicaraguaNitValidator());
@@ -135,6 +145,8 @@ public class IdValidationServiceImpl implements IdValidationService {
         register(Country.PERU, DocumentType.RUC_PE, new PeruRucValidator());
         // Puerto Rico
         register(Country.PUERTO_RICO, DocumentType.LICENSE_PR, new PuertoRicoLicenseValidator());
+        register(Country.PUERTO_RICO, DocumentType.SSN_PR, new PuertoRicoSsnValidator());
+        register(Country.PUERTO_RICO, DocumentType.ELECTORAL_ID_PR, new PuertoRicoElectoralIdValidator());
         // República Dominicana
         register(Country.REPUBLICA_DOMINICANA, DocumentType.CIE_DO, new DominicanCieValidator());
         register(Country.REPUBLICA_DOMINICANA, DocumentType.RNC_DO, new DominicanRncValidator());

@@ -1,27 +1,16 @@
 package com.ksoft.validation.core.algorithm.country.co;
 
-import com.ksoft.validation.core.algorithm.DocumentValidator;
+import com.ksoft.validation.core.algorithm.mod11.Mod11Validator;
 
-public class ColombiaCeValidator implements DocumentValidator {
-    
-    // Formato: 6-7 dígitos (antiguas podrían tener letras)
-    private static final String CE_PATTERN = "^[A-Za-z0-9]{6,7}$";
-    
-    @Override
-    public boolean isValid(String documentNumber) {
-        String cleaned = cleanNumber(documentNumber);
-        
-        // Validar formato básico
-        if (!cleaned.matches(CE_PATTERN)) {
-            return false;
-        }
-        
-        // No hay algoritmo estándar de validación
-        return true;
+public class ColombiaCeValidator extends Mod11Validator {
+
+    public ColombiaCeValidator() {
+        // Pesos específicos para la CE colombiana
+        super(new int[]{3, 7, 13, 17, 19, 23, 29, 37, 41, 43, 47}, true, 10, false);
     }
-    
-    public boolean isNumericCe(String ce) {
-        String cleaned = cleanNumber(ce);
-        return cleaned.matches("^[0-9]{6,7}$");
+
+    @Override
+    public String getDocumentType() {
+        return "Cédula de Extranjería Colombiana";
     }
 }

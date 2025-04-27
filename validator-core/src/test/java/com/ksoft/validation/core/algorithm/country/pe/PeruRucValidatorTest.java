@@ -26,6 +26,6 @@ class PeruRucValidatorTest {
 
     @Test
     void testFormatRuc() {
-        assertEquals("1012345678-9", validator.formatRuc("10123456789"));
+        assertEquals("1012345678-9", validator.format("10123456789"));
     }
 }

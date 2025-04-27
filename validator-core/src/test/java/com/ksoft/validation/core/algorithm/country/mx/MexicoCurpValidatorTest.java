@@ -21,6 +21,6 @@ class MexicoCurpValidatorTest {
 
     @Test
     void testFormatCurp() {
-        assertEquals("ROAE800101HDFRNSA1", validator.formatCurp("roae800101hdfrnsa1"));
+        assertEquals("ROAE800101HDFRNSA1", validator.format("roae800101hdfrnsa1"));
     }
 }

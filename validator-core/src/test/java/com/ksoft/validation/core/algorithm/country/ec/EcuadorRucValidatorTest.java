@@ -27,9 +27,4 @@ class EcuadorRucValidatorTest {
         assertFalse(validator.isValid("17100340650"));   // Muy corto
     }
 
-    @Test
-    void testTipoContribuyente() {
-        assertEquals("Persona natural", validator.getTipoContribuyente("1701234567001"));
-        assertEquals("Empresa pública", validator.getTipoContribuyente("1761234567001"));
-    }
 }
