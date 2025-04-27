@@ -1,119 +1,56 @@
 package com.ksoft.validation.core.algorithm.country.mx;
 
-import com.ksoft.validation.core.algorithm.DocumentValidator;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import com.ksoft.validation.core.algorithm.BaseDocumentValidator;
 
-public class MexicoRfcValidator implements DocumentValidator {
-    
-    private static final String RFC_PATTERN = "^[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}$";
-    private static final Set<String> PALABRAS_INCONVENIENTES = new HashSet<>(Arrays.asList(
-        "BUEI", "BUEY", "CACA", "CACO", "CAGA", "CAGO", "CAKA", "CAKO", 
-        "COGE", "COJA", "COJE", "COJI", "COJO", "CULO", "FETO", "GUEY", 
-        "JOTO", "KACA", "KACO", "KAGA", "KAGO", "KOGE", "KOJO", "KAKA", 
-        "KULO", "MAME", "MAMO", "MEAR", "MEON", "MION", "MOCO", "MULA", 
-        "PEDA", "PEDO", "PENE", "PUTA", "PUTO", "QULO", "RATA", "RUIN"
-    ));
+public class MexicoRfcValidator extends BaseDocumentValidator {
+    @Override
+    protected String getDocumentPattern() {
+        return "^[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}$";
+    }
     
     @Override
-    public boolean isValid(String documentNumber) {
-        String rfc = cleanNumber(documentNumber).toUpperCase();
+    protected String getDocumentTypeName() {
+        return "Registro Federal de Contribuyentes (RFC) Mexicano";
+    }
+    
+    @Override
+    public boolean isValid(String rfc) {
+        String cleaned = cleanNumber(rfc);
         
-        // Validar formato básico
-        if (!rfc.matches(RFC_PATTERN)) {
+        if (!super.isValid(cleaned)) {
             return false;
         }
         
-        // Validar longitud (12 o 13 caracteres)
-        if (rfc.length() != 12 && rfc.length() != 13) {
-            return false;
+        if (cleaned.length() == 13) {
+            return validateVerifierDigit(cleaned);
         }
+        return true;
+    }
         
-        // Extraer componentes
-        String nombre = rfc.substring(0, rfc.length() - 9);
-        String fecha = rfc.substring(rfc.length() - 9, rfc.length() - 3);
-        String homoclave = rfc.substring(rfc.length() - 3, rfc.length() - 1);
-        char digitoVerificador = rfc.charAt(rfc.length() - 1);
+    private boolean validateVerifierDigit(String rfc) {
+        String base = rfc.substring(0, 12);
+        char providedDv = rfc.charAt(12);
         
-        // Validaciones específicas
-        return !contienePalabraInconveniente(nombre)
-                && isValidFecha(fecha)
-                && isValidDigitoVerificador(rfc);
-    }
-    
-    private boolean contienePalabraInconveniente(String nombre) {
-        return nombre.length() == 4 && PALABRAS_INCONVENIENTES.contains(nombre);
-    }
-    
-    private boolean isValidFecha(String fecha) {
-        try {
-            int anio = Integer.parseInt(fecha.substring(0, 2));
-            int mes = Integer.parseInt(fecha.substring(2, 4));
-            int dia = Integer.parseInt(fecha.substring(4, 6));
-            
-            return mes > 0 && mes <= 12 && 
-                   dia > 0 && dia <= 31 && 
-                   anio >= 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-    
-    private boolean isValidDigitoVerificador(String rfc) {
-        String base = rfc.substring(0, rfc.length() - 1);
-        char providedDv = rfc.charAt(rfc.length() - 1);
-        
-        char calculatedDv = calculateVerifierDigit(base);
-        return providedDv == calculatedDv;
-    }
-    
-    private char calculateVerifierDigit(String base) {
-        String dictionary = "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ ";
+        // Algoritmo para cálculo del dígito verificador
+        String alphabet = "0123456789ABCDEFGHIJKLMN&OPQRSTUVWXYZ Ñ";
         int sum = 0;
-        int multiplier = 13;
         
         for (int i = 0; i < base.length(); i++) {
             char c = base.charAt(i);
-            int value = dictionary.indexOf(c);
-            if (value == -1) return '0';
-            sum += value * (multiplier - i);
+            int value = alphabet.indexOf(c);
+            sum += value * (13 - i);
         }
         
         int remainder = sum % 11;
-        int dvValue = 11 - remainder;
+        int calculatedDv = (remainder == 0) ? 0 : 11 - remainder;
         
-        if (dvValue == 11) return '0';
-        if (dvValue == 10) return 'A';
-        
-        return Character.forDigit(dvValue, 10);
-    }
-    
-    public String formatRfc(String rfc) {
-        if (!isValid(rfc)) return rfc;
-        return rfc.toUpperCase();
-    }
-    
-    public String getTipoRfc(String rfc) {
-        if (!isValid(rfc)) return "Desconocido";
-        return rfc.length() == 12 ? "Persona moral" : "Persona física";
-    }
-
-    @Override
-    public String format(String documentNumber) {
-        // Eliminar caracteres no alfanuméricos
-        String cleaned = documentNumber.replaceAll("[^A-Z0-9]", "").toUpperCase();
-        
-        // Validar RFC (12-13 caracteres alfanuméricos)
-        if (cleaned.matches("[A-Z]{3,4}[0-9]{6}[A-Z0-9]{2,3}")) {
-            return cleaned;
+        char expectedDv;
+        if (calculatedDv == 10) {
+            expectedDv = 'A';
+        } else {
+            expectedDv = Character.forDigit(calculatedDv, 10);
         }
         
-        return documentNumber; // Devolver original si no cumple formato
-    }
-
-    @Override
-    public String getDocumentType() {
-        return "Registro Federal de Contribuyentes Mexicano (RFC)";
+        return Character.toUpperCase(providedDv) == expectedDv;
     }
 }

@@ -20,6 +20,6 @@ class GuatemalaDpiValidatorTest {
 
     @Test
     void testFormatDpi() {
-        assertEquals("1234-5678 901-23", validator.formatDpi("1234567890123"));
+        assertEquals("1234-5678 901-23", validator.format("1234567890123"));
     }
 }

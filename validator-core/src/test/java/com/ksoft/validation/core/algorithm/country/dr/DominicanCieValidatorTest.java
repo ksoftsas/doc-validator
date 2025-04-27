@@ -20,6 +20,6 @@ class DominicanCieValidatorTest {
 
     @Test
     void testFormatCie() {
-        assertEquals("001-2345678-9", validator.formatCie("00123456789"));
+        assertEquals("001-2345678-9", validator.format("00123456789"));
     }
 }

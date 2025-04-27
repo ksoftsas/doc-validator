@@ -25,8 +25,8 @@ class BoliviaNitValidatorTest {
 
     @Test
     void testFormatNit() {
-        assertEquals("1234567-8", validator.formatNit("12345678"));
-        assertEquals("1663911-K", validator.formatNit("1663911K"));
-        assertEquals("1", validator.formatNit("1"));
+        assertEquals("1234567-8", validator.format("12345678"));
+        assertEquals("1663911-K", validator.format("1663911K"));
+        assertEquals("1", validator.format("1"));
     }
 }

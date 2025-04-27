@@ -29,8 +29,8 @@ public class DocumentValidationService {
         
         if (isValid) {
             response.setFormattedDocument(validator.format(documentNumber));
-            // response.setDocumentType(getDocumentTypeDescription(countryCode, documentType));
-            // response.setAdditionalInfo(getAdditionalInfo(validator, documentNumber));
+            response.setDocumentType(validator.getDocumentType());
+            response.setAdditionalInfo(isValid?"Documento válido":"Documento inválido");
         }
         
         return response;

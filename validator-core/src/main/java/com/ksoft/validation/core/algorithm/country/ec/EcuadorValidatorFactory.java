@@ -10,6 +10,8 @@ public class EcuadorValidatorFactory {
                 return new EcuadorCiValidator();
             case "RUC_EC":
                 return new EcuadorRucValidator();
+            case "CE_EC":
+                return new EcuadorCeValidator();
             default:
                 throw new IllegalArgumentException("Tipo de documento no soportado para Ecuador: " + documentType);
         }

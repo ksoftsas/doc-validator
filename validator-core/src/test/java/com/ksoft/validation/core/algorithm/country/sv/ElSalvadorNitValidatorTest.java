@@ -20,6 +20,6 @@ class ElSalvadorNitValidatorTest {
 
     @Test
     void testFormatNit() {
-        assertEquals("0614-090789-102-3", validator.formatNit("06140907891023"));
+        assertEquals("0614-090789-102-3", validator.format("06140907891023"));
     }
 }

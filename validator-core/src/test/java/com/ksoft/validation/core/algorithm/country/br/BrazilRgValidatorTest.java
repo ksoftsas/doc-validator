@@ -21,6 +21,6 @@ class BrazilRgValidatorTest {
 
     @Test
     void testFormatRg() {
-        assertEquals("1234567-X", validator.formatRg("1234567X"));
+        assertEquals("1234567-X", validator.format("1234567X"));
     }
 }

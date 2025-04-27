@@ -27,23 +27,7 @@ class PuertoRicoLicenseValidatorTest {
 
     @Test
     void testFormatLicense() {
-        assertEquals("1234-5678", validator.formatLicense("12345678"));
-        assertEquals("ABC-123456", validator.formatLicense("ABC123456"));
-    }
-
-    @Test
-    void testLicenseType() {
-        assertEquals("Licencia Antigua (Numérica)", 
-            validator.getLicenseType("12345678"));
-        assertEquals("Licencia Nueva (Alfanumérica)", 
-            validator.getLicenseType("ABC123456"));
-    }
-
-    @Test
-    void testCommercialLicense() {
-        assertTrue(validator.isCommercialLicense("71234567"));
-        assertTrue(validator.isCommercialLicense("CBC123456"));
-        assertFalse(validator.isCommercialLicense("11234567"));
-        assertFalse(validator.isCommercialLicense("ABC123456"));
+        assertEquals("1234-5678", validator.format("12345678"));
+        assertEquals("ABC-123456", validator.format("ABC123456"));
     }
 }

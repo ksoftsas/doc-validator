@@ -21,6 +21,6 @@ class PanamaCipValidatorTest {
 
     @Test
     void testFormatCip() {
-        assertEquals("PE-123456-78", validator.formatCip("PE12345678"));
+        assertEquals("PE-123456-78", validator.format("PE12345678"));
     }
 }

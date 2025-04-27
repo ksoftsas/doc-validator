@@ -1,83 +1,19 @@
 package com.ksoft.validation.core.algorithm.country.ar;
 
-import com.ksoft.validation.core.algorithm.DocumentValidator;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import com.ksoft.validation.core.algorithm.mod11.Mod11Validator;
 
-public class ArgentinaCuitCuilValidator implements DocumentValidator {
-    
-    // Pesos para cálculo del dígito verificador
-    private static final int[] WEIGHTS = {5, 4, 3, 2, 7, 6, 5, 4, 3, 2};
-    
-    // Prefijos válidos para CUIT/CUIL
-    private static final Set<String> VALID_PREFIXES = new HashSet<>(Arrays.asList(
-        "20", "23", "24", "27", "30", "33", "34"
-    ));
-    
-    @Override
-    public boolean isValid(String documentNumber) {
-        String cleaned = cleanNumber(documentNumber);
-        
-        // Validación básica
-        if (cleaned.length() != 11 || !isNumeric(cleaned)) {
-            return false;
-        }
-        
-        // Validar prefijo
-        String prefix = cleaned.substring(0, 2);
-        if (!VALID_PREFIXES.contains(prefix)) {
-            return false;
-        }
-        
-        // Calcular dígito verificador
-        int calculatedDv = calculateVerifierDigit(cleaned.substring(0, 10));
-        int providedDv = Character.getNumericValue(cleaned.charAt(10));
-        
-        // Comparar dígitos verificadores
-        return calculatedDv == providedDv;
-    }
-    
-    private int calculateVerifierDigit(String base) {
-        int sum = 0;
-        
-        for (int i = 0; i < base.length(); i++) {
-            int digit = Character.getNumericValue(base.charAt(i));
-            sum += digit * WEIGHTS[i];
-        }
-        
-        int remainder = sum % 11;
-        int dv = 11 - remainder;
-        
-        // Casos especiales
-        if (dv == 11) {
-            dv = 0;
-        } else if (dv == 10) {
-            // Manejo especial para cuando el resultado es 10
-            // Depende del prefijo:
-            // - Para prefijo 23 puede ser 9 o 4
-            // - Para otros prefijos generalmente es 9
-            dv = (base.startsWith("23")) ? 4 : 9; // Simplificación, según reglas AFIP
-        }
-        
-        return dv;
-    }
+public class ArgentinaCuitCuilValidator extends Mod11Validator {
 
-    @Override
-    public String format(String documentNumber) {
-        // Eliminar caracteres no numéricos ni guiones
-        String cleaned = documentNumber.replaceAll("[^0-9-]", "");
-        
-        // Validar formato CUIT/CUIL (XX-XXXXXXXX-X)
-        if (cleaned.matches("\\d{2}-\\d{8}-\\d{1}")) {
-            return cleaned;
-        }
-        
-        return documentNumber; // Devolver original si no cumple formato
+    public ArgentinaCuitCuilValidator() {
+        // Configuración específica para Argentina:
+        super(new int[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 }, // Pesos
+                false, // No invertir orden
+                11, // Longitud fija (XX-XXXXXXXX-X)
+                true); // Permite 'K' como DV
     }
 
     @Override
     public String getDocumentType() {
-        return "CUIT/CUIL Argentino";
+        return "CUIL/CUIT Argentino";
     }
 }

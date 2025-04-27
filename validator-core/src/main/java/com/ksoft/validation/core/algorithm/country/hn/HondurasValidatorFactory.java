@@ -8,6 +8,8 @@ public class HondurasValidatorFactory {
         switch (documentType.toUpperCase()) {
             case "RTN_HN":
                 return new HondurasRtnValidator();
+            case "DNI_HN":
+                return new HondurasDniValidator();
             default:
                 throw new IllegalArgumentException("Tipo de documento no soportado para Honduras: " + documentType);
         }

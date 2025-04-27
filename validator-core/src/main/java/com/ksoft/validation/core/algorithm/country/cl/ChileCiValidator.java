@@ -1,76 +1,25 @@
 package com.ksoft.validation.core.algorithm.country.cl;
 
-import com.ksoft.validation.core.algorithm.DocumentValidator;
+import com.ksoft.validation.core.algorithm.BaseDocumentValidator;
 
-public class ChileCiValidator implements DocumentValidator {
-    
-    // Usamos el validador de RUT internamente ya que comparten algoritmo
-    private final ChileRutValidator rutValidator = new ChileRutValidator();
-    
-    // Patrón específico para CI (similar a RUT pero con posibles prefijos diferentes)
-    private static final String CI_PATTERN = "^[0-9]{7,8}-[0-9kK]$";
+public class ChileCiValidator extends BaseDocumentValidator {
+    @Override
+    protected String getDocumentPattern() {
+        return "^[0-9]{7,8}$"; // 7 u 8 dígitos
+    }
     
     @Override
-    public boolean isValid(String documentNumber) {
-        // Primero validar el formato básico
-        String cleaned = cleanFormat(documentNumber);
-        if (!cleaned.matches(CI_PATTERN)) {
-            return false;
-        }
-        
-        // Luego validar usando el algoritmo de RUT
-        return rutValidator.isValid(documentNumber);
+    protected String getDocumentTypeName() {
+        return "Cédula de Identidad Chilena";
     }
     
-    // Método para limpiar y estandarizar el formato
-    private String cleanFormat(String ci) {
-        // Eliminar puntos, espacios y normalizar K mayúscula
-        return ci.replaceAll("[^0-9kK-]", "").toUpperCase();
-    }
-    
-    // Método para determinar si es CI de extranjero
-    public boolean isExtranjero(String ci) {
-        if (!isValid(ci)) return false;
-        
-        String cleaned = cleanFormat(ci);
-        String numberPart = cleaned.split("-")[0];
-        
-        // Los números que comienzan con 50-59 son para extranjeros
-        if (numberPart.length() >= 2) {
-            int firstTwoDigits = Integer.parseInt(numberPart.substring(0, 2));
-            return firstTwoDigits >= 50 && firstTwoDigits <= 59;
-        }
-        return false;
-    }
-    
-    // Método para formatear la CI consistentemente
-    public String formatCi(String ci) {
-        if (!isValid(ci)) return ci;
-        return rutValidator.formatRut(ci); // Reutilizamos el formateo de RUT
-    }
-    
-    // Método para extraer solo los dígitos (sin DV ni formato)
-    public String extractBaseNumber(String ci) {
-        if (!isValid(ci)) return ci;
-        String cleaned = cleanFormat(ci);
-        return cleaned.split("-")[0];
-    }
-
     @Override
     public String format(String documentNumber) {
-        // Eliminar caracteres no numéricos
-        String cleaned = documentNumber.replaceAll("[^0-9]", "");
-        
-        // Validar CI_CL (8 dígitos)
-        if (cleaned.matches("\\d{8}")) {
-            return cleaned;
+        String cleaned = cleanNumber(documentNumber);
+        // Formato opcional: XX.XXX.XXX
+        if (cleaned.length() >= 7) {
+            return cleaned.replaceAll("(\\d{2})(\\d{3})(\\d{3})", "$1.$2.$3");
         }
-        
-        return documentNumber; // Devolver original si no cumple formato
-    }
-
-    @Override
-    public String getDocumentType() {
-        return "Cédula de Identidad Chilena (CI)";
+        return cleaned;
     }
 }

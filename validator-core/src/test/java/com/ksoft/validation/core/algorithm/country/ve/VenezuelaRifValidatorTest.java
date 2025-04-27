@@ -26,6 +26,6 @@ class VenezuelaRifValidatorTest {
 
     @Test
     void testFormatRif() {
-        assertEquals("J-12345678-9", validator.formatRif("J123456789"));
+        assertEquals("J-12345678-9", validator.format("J123456789"));
     }
 }

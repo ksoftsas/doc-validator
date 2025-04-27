@@ -10,6 +10,8 @@ public class MexicoValidatorFactory {
                 return new MexicoCurpValidator();
             case "RFC":
                 return new MexicoRfcValidator();
+            case "NSS":
+                return new MexicoNssValidator();
             default:
                 throw new IllegalArgumentException("Tipo de documento no soportado para México: " + documentType);
         }
